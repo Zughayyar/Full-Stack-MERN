@@ -15,17 +15,17 @@ app.use(express.json()); // Parse JSON bodies
 // Routes
 require('./routes/product.routes')(app);
 
-// Serve static files from Vite's dist folder
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// Catch-all route to serve Vite's index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-});
-
-app.use((req, res) => {
-    res.status(404).json({ message: "Route not found" });
-});
+// // Serve static files from Vite's dist folder
+// app.use(express.static(path.join(__dirname, '../client/dist')));
+//
+// // Catch-all route to serve Vite's index.html
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// });
+//
+// app.use((req, res) => {
+//     res.status(404).json({ message: "Route not found" });
+// });
 
 // Start server
 app.listen(port, () => {

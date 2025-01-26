@@ -18,6 +18,12 @@ const ProductList = () => {
             });
     }, [products]); // Empty dependency array so it runs only once when the component mounts
 
+    const deleteProduct = (productId) => {
+        axios.delete('http://localhost:8000/api/products/' + productId)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    }
+
     return (
         <div>
             <h1>Product List:</h1>
@@ -28,6 +34,8 @@ const ProductList = () => {
                             <Link to={`/products/${product._id}`}>
                                 {product.title}
                             </Link>
+                            <Link to={`/products/${product._id}/edit`}>Edit</Link>
+                            <button onClick={() => deleteProduct(product._id)}>Delete</button>
                         </li>
                     ))
                 }

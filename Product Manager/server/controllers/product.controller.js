@@ -17,37 +17,27 @@ module.exports = {
     },
 
     // Create a new product
-    createNewProduct: (req, res) => {
-        Product.create(req.body)
-            .then(newProduct => res.status(201).json({ success: true, product: newProduct }))
-            .catch(err => res.status(400).json({ success: false, error: err.message }));
+    createNewProduct: (request, response) => {
+        Product.create(request.body)
+            .then(product => response.json(product))
+            .catch(error => response.json(error));
     },
 
     // Update an existing product by ID
-    updateExistingProduct: (req, res) => {
+    updateExistingProduct: (request, response) => {
         Product.findOneAndUpdate(
-            { _id: req.params.id },
-            req.body,
-            { new: true, runValidators: true }
+            { _id: request.params.id },
+            request.body,
+            { new: true ,runValidators: true },
         )
-            .then(updatedProduct => {
-                if (!updatedProduct) {
-                    return res.status(404).json({ success: false, message: "Product not found" });
-                }
-                res.json({ success: true, product: updatedProduct });
-            })
-            .catch(err => res.status(400).json({ success: false, error: err.message }));
+            .then(updatedProduct => response.json(updatedProduct))
+            .catch(error => response.json(error));
     },
 
     // Delete an existing product by ID
-    deleteAnExistingProduct: (req, res) => {
-        Product.deleteOne({ _id: req.params.id })
-            .then(result => {
-                if (result.deletedCount === 0) {
-                    return res.status(404).json({ success: false, message: "Product not found" });
-                }
-                res.json({ success: true, result });
-            })
-            .catch(err => res.status(500).json({ success: false, error: err.message }));
+    deleteAnExistingProduct: (request, response) => {
+        Product.deleteOne({ _id: request.params.id })
+            .then(response => response.json(response))
+            .catch(error => response.json(error));
     }
 };
