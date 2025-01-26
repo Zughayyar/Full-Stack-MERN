@@ -23,6 +23,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
+app.use((req, res) => {
+    res.status(404).json({ message: "Route not found" });
+});
+
 // Start server
 app.listen(port, () => {
     console.log(`Listening at Port ${port}`);

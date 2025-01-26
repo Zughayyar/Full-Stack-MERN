@@ -2,22 +2,18 @@ const { Product } = require('../models/product.model');
 
 module.exports = {
     // Retrieve all products
-    findAllProducts: (req, res) => {
+    findAllProducts: (request, response) => {
         Product.find()
-            .then(allProducts => res.json({ success: true, products: allProducts }))
-            .catch(err => res.status(500).json({ success: false, error: err.message }));
+            .then(allProducts => response.json(allProducts))
+            .catch(err => response.json(err));
     },
 
     // Retrieve a single product by ID
-    findOneSingleProduct: (req, res) => {
-        Product.findOne({ _id: req.params.id })
-            .then(singleProduct => {
-                if (!singleProduct) {
-                    return res.status(404).json({ success: false, message: "Product not found" });
-                }
-                res.json({ success: true, product: singleProduct });
-            })
-            .catch(err => res.status(500).json({ success: false, error: err.message }));
+    findOneSingleProduct: (request, response) => {
+        let id = request.params.id
+        Product.findOne({ _id: id })
+            .then(product => response.json(product))
+            .catch(error => response.json(error));
     },
 
     // Create a new product

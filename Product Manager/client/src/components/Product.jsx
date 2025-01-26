@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {useState} from "react";
 
-const Product = () => {
+const Product = (props) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState(0.00)
@@ -32,7 +32,6 @@ const Product = () => {
                 <label>Description</label><br/>
                 <input type="text" onChange={e=>setDescription(e.target.value)} value={description}/><br/>
                 <button type="submit">Create</button>
-
             </form>
         </div>
     )
