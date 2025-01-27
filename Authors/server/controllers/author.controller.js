@@ -26,9 +26,20 @@ module.exports = {
     // Update an existing Author by ID
     updateAuthor: (request, response) => {
         let authorId = request.params.authorId;
-        Author.findOneAndUpdate({_id: authorId}, undefined, undefined)
-        .then(author => response.json(author))
-        .catch(error => response.json(error));
+
+        // Extract data to update from the request body
+        Author.findOneAndUpdate(
+            { _id: authorId },            // Filter: Find author by ID
+            { $set: request.body },       // Update: Fields to update
+            { new: true, runValidators: true } // Options: Return updated document, apply validation
+        )
+            .then(author => {
+                if (!author) {
+                    return response.status(404).json({ message: "Author not found" });
+                }
+                response.json(author);    // Return the updated author
+            })
+            .catch(error => response.status(400).json(error)); // Handle errors
     },
 
     // Delete an existing Author by ID
@@ -36,7 +47,7 @@ module.exports = {
         let authorId = request.params.authorId;
         Author.deleteOne({_id: authorId}, undefined)
         .then(author => response.json(author))
-        .catch(error => response.json(error));
+        .catch(error => response.status(400).json(error));
     }
 
 

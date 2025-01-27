@@ -3,6 +3,8 @@ import styles from "./components/styles/styles.module.css";
 import AuthorsTable from "./components/AuthorsTable.jsx";
 import {Route, Routes} from "react-router-dom";
 import AuthorsCreateNew from "./components/AuthorsCreateNew.jsx";
+import AuthorForm from "./components/AuthorForm.jsx";
+import AuthorUpdate from "./components/AuthorUpdate.jsx";
 
 const App = () => {
     return (
@@ -14,7 +16,16 @@ const App = () => {
                         <AuthorsTable />
                     </AuthorDashboard>
                 } />
-                <Route path="/authors/new" element={<AuthorsCreateNew/>}/>
+                <Route path="/authors/new" element={
+                    <AuthorsCreateNew>
+                        <AuthorForm/>
+                    </AuthorsCreateNew>
+                }/>
+                <Route path="/authors/:id/edit" element={
+                    <AuthorUpdate>
+                        <AuthorForm/>
+                    </AuthorUpdate>
+                }/>
             </Routes>
         </div>
     )

@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Button, Table} from 'antd';
 import axios from "axios";
 import styles from './styles/styles.module.css'
+import {Link} from "react-router-dom";
 
 
 const AuthorDashboard = () => {
@@ -19,7 +20,13 @@ const AuthorDashboard = () => {
             .catch((error) => {
                 console.error("Error fetching authors:", error);
             });
-    }, []);
+    }, [authors]);
+
+    const deleteAuthor = (authorId) => {
+        axios.delete("http://localhost:8000/api/authors/" + authorId)
+        .then(() => {})
+        .catch((error) => console.log(error));
+    }
 
     const columns = [
         {
@@ -33,11 +40,13 @@ const AuthorDashboard = () => {
         {
             title: "Action",
             key: "action",
-            render: () => (
+            render: (_, record) => (
                 <span>
-                    <Button type="primary">Edit</Button>
+                    <Link to={`/authors/${record._id}/edit`}>
+                        <Button type="primary">Edit</Button>
+                    </Link>
                     <span> </span>
-                    <Button type="primary">Delete</Button>
+                    <Button type="primary" onClick={() => deleteAuthor(record._id)}>Delete</Button>
                 </span>
             ),
         },
