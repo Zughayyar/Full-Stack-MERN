@@ -1,128 +1,85 @@
 ################# Back End Set up ##################
 
 // make a new folder named "myNewProject" cd into it:
-mkdir myNewProject
-cd myNewProject
+    mkdir myNewProject
+    cd myNewProject
 
 // create a folder named "server" and navigate into it using the command cd.
 // This folder will house all our backend code!
-mkdir server
-cd server
+    mkdir server
+    cd server
 
 // create a new project via:
 npm init -y
 
 // install dependencies:
-npm install express mongoose dotenv cors
+    npm install express mongoose dotenv cors
 
 // create a new file named server.js
-touch server.js
+// create an environment file and a .gitignore
+    touch server.js
+    touch .env
+    touch .gitignore
+
 
 // add the following code into server.js:
-const express = require('express');
-const app = express();
-require('dotenv').config();
-const port = process.env.PORT || 8000;
+    require('dotenv').config();
+    require('./config/mongoose.config');
 
-app.listen(port, () => console.log(`Listening on port: ${port}`) );
+    const express = require('express');
+    const app = express();
+    const port = process.env.PORT;
 
-// create an environment file and a .gitignore
-touch .env
-touch .gitignore
+    // Middleware
+    app.use(express.json(), express.urlencoded({ extended: true }));
+
+    // Routes
+    const authorRoutes = require("./routes/author.routes");
+    authorRoutes(app);
+
+    // Start server
+    app.listen(port, () => {
+        console.log(`Listening at Port ${port}`);
+    });
 
 // .gitignore file, include the following:
-/node_modules
-.env
+    /node_modules
+    .env
 
 // .env file, include the following:
-PORT=8000
-DB=my_full_stack_MERN
-# mongo atlas connection
-ATLAS_USERNAME=zughayyar
-ATLAS_PASSWORD=qwer1234@anas
+    PORT=8000
+    DB=my_full_stack_MERN
+    # mongo atlas connection
+    ATLAS_USERNAME=zughayyar
+    ATLAS_PASSWORD=qwer1234@anas
 
 // create four more folders: "config", "controllers", "models", and "routes":
-mkdir config controllers models routes
+    mkdir config controllers models routes
 
 // create "mongoose.config.js"
-require('dotenv').config(); // Load environment variables from .env file
-const mongoose = require('mongoose');
+    require('dotenv').config(); // Load environment variables from .env file
+    const mongoose = require('mongoose');
 
-// Fetch the values from the environment variables
-const dbName = process.env.DB;
-const username = process.env.ATLAS_USERNAME;
-const pw = encodeURIComponent(process.env.ATLAS_PASSWORD); // Ensure password is URL encoded
+    // Fetch the values from the environment variables
+    const dbName = process.env.DB;
+    const username = process.env.ATLAS_USERNAME;
+    const pw = encodeURIComponent(process.env.ATLAS_PASSWORD); // Ensure password is URL encoded
 
-// Create the MongoDB connection string
-const uri = `mongodb+srv://${username}:${pw}@mycluster.ypx3l.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=MyCluster`;
+    // Create the MongoDB connection string
+    const uri = `mongodb+srv://${username}:${pw}@mycluster.ypx3l.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=MyCluster`;
 
-// Connect to MongoDB using Mongoose
-mongoose.connect(uri)
-    .then(() => console.log("Established a connection to the database"))
-    .catch(err => console.log("Something went wrong when connecting to the database", err));
+    // Connect to MongoDB using Mongoose
+    mongoose.connect(uri)
+        .then(() => console.log("Established a connection to the database"))
+        .catch(err => console.log("Something went wrong when connecting to the database", err));
 
 
 
 ################# Front End Set up ##################
 // Ensure you're at the same folder level as your "server.js" file.
 // Create React Project
-npm create vite@latest
-cd client
-npm install
-npm run dev
-
-
-################### Full Setup ####################
-// add a controller named person.controller.js within the 'controllers' folder:
-module.exports.index = (request, response) => {
-    response.json({
-       message: "Hello World"
-    });
-}
-
-// Next, in the routes folder, let's create the file person.routes.js:
-const PersonController = require('../controllers/person.controller');
-module.exports = function(app){
-    app.get('/api', PersonController.index);
-}
-
-// connect to this route in our server.js file:
-const express = require('express');
-const cors = require('cors') // This is new
-const app = express();
-app.use(cors())
-require('./routes/person.routes')(app);
-app.listen(8000, () => {
-    console.log("Listening at Port 8000")
-})
-
-
-#####################################################################################
-######### Our backend is configured, but let's showcase this on our frontend. #######
-#####################################################################################
-
-// Navigate into your React project directory, named client,
-// and execute the following command:
-npm install axios
-
-
-// Create new React Component "MainComponent.jsx":
-import {useEffect, useState} from "react";
-import axios from "axios";
-
-
-const MainComponent = () => {
-    const [ message, setMessage ] = useState("Loading...")
-    useEffect(()=>{
-        axios.get("http://localhost:8000/api")
-            .then(res=>setMessage(res.data.message))
-            .catch(err => console.log(err));
-    }, []);
-    return (
-        <div>
-            <h2>Message from the backend: {message}</h2>
-        </div>
-    )
-}
-
-export default MainComponent;
+    npm create vite@latest
+    cd client
+    npm install
+    npm install axios
+    npm run dev
