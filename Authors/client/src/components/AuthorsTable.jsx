@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button, Table} from 'antd';
+import {Button, Spin, Table} from 'antd';
 import axios from "axios";
 import styles from './styles/styles.module.css'
 import {Link} from "react-router-dom";
@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 
 const AuthorDashboard = () => {
     const [authors, setAuthors] = useState([])
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         axios
             .get("http://localhost:8000/api/authors")
@@ -16,9 +17,11 @@ const AuthorDashboard = () => {
                     key: author._id,
                 }));
                 setAuthors(dataWithKeys);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching authors:", error);
+                setLoading(false);
             });
     }, [authors]);
 
@@ -51,6 +54,10 @@ const AuthorDashboard = () => {
             ),
         },
     ];
+
+    if (loading) {
+        return <Spin size="large" spinning={loading} />
+    }
 
     return (
         <div className={styles.authorsTable}>

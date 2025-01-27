@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import AuthorsCreateNew from "./components/AuthorsCreateNew.jsx";
 import AuthorForm from "./components/AuthorForm.jsx";
 import AuthorUpdate from "./components/AuthorUpdate.jsx";
+import AuthorDetails from "./components/AuthorDetails.jsx";
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                         <AuthorForm/>
                     </AuthorUpdate>
                 }/>
+                <Route path="/authors/:authorId" element={<AuthorDetails/>} />
             </Routes>
         </div>
     )
