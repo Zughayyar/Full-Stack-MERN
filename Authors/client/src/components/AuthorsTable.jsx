@@ -10,10 +10,9 @@ const AuthorDashboard = () => {
         axios
             .get("http://localhost:8000/api/authors")
             .then((response) => {
-                // Add a 'key' property to each author object
                 const dataWithKeys = response.data.map((author) => ({
                     ...author,
-                    key: author._id, // Use the unique '_id' from the response as the 'key'
+                    key: author._id,
                 }));
                 setAuthors(dataWithKeys);
             })
@@ -27,6 +26,9 @@ const AuthorDashboard = () => {
             title: "Author Name",
             dataIndex: "name",
             key: "name",
+            render: (_, record) => (
+                <a href={`/authors/${record._id}`}>{record.name}</a>
+            )
         },
         {
             title: "Action",
@@ -43,6 +45,10 @@ const AuthorDashboard = () => {
 
     return (
         <div className={styles.authorsTable}>
+            <div className={styles.navContainer}>
+                <a href="/authors/new">
+                    <Button type="primary">Add an Author</Button></a>
+            </div>
             <h3>We Have quotes by:</h3>
             <Table columns={columns} dataSource={authors} />
         </div>

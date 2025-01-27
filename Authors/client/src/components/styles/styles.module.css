@@ -12,3 +12,20 @@
     padding: 10px;
     text-align: center;
 }
+
+.navContainer {
+    width: 75vw;
+    padding: 20px;
+}
+
+.formContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorMessage {
+    color: red;
+}
