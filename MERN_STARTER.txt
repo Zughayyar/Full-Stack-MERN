@@ -29,8 +29,10 @@ npm init -y
     const express = require('express');
     const app = express();
     const port = process.env.PORT;
+    const cors = require('cors');
 
     // Middleware
+    app.use(cors());
     app.use(express.json(), express.urlencoded({ extended: true }));
 
     // Routes
@@ -82,4 +84,5 @@ npm init -y
     cd client
     npm install
     npm install axios
+    npm install react-router-dom
     npm run dev
