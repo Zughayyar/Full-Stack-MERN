@@ -50,7 +50,4 @@ module.exports = {
         .catch(error => response.status(400).json(error));
     }
 
-
-
-
 }
