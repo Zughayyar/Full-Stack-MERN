@@ -5,10 +5,12 @@ const PlayerSchema = new mongoose.Schema({
     playerName: {
         type: String,
         required: [true, 'Player name is required'],
-        minLength: [2, 'Player name must be at least 2 characters'],
+        minLength: [2, 'Player name must be at least 2 characters']
     },
     preferredPosition: {
-        type: String
+        type: String,
+        required: [true, 'Preferred Position is required'],
+        minLength: [2, 'Preferred Position must be at least 2 characters'],
     }
     }, { timestamps: true })
 

@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import styles from './styles/mainStyles.module.css';
 
 const PlayerForm = () => {
     const { id } = useParams();
@@ -12,7 +11,7 @@ const PlayerForm = () => {
 
     const [playerName, setPlayerName] = useState("");
     const [preferredPosition, setPreferredPosition] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState({});
     const [form] = Form.useForm();
 
     // Fetch player data if editing
@@ -27,12 +26,6 @@ const PlayerForm = () => {
                 })
                 .catch(error => {
                     console.error("Error fetching player data:", error.response?.data);
-                    const errorResponse = error.response?.data?.errors || {};
-                    const errorArray = Object.keys(errorResponse).map(key => ({
-                        key,
-                        message: errorResponse[key].message,
-                    }));
-                    setErrors(errorArray);
                 });
         }
     }, [id, isEditing, form]);
@@ -50,11 +43,11 @@ const PlayerForm = () => {
             .catch(error => {
                 console.error("Error submitting form:", error.response?.data);
                 const errorResponse = error.response?.data?.errors || {};
-                const errorArray = Object.keys(errorResponse).map(key => ({
-                    key,
-                    message: errorResponse[key].message,
-                }));
-                setErrors(errorArray);
+                const errorObject = Object.keys(errorResponse).reduce((acc, key) => {
+                    acc[key] = errorResponse[key].message;
+                    return acc;
+                }, {});
+                setErrors(errorObject);
             });
     };
 
@@ -68,12 +61,8 @@ const PlayerForm = () => {
             <Form.Item
                 label="Player Name"
                 name="playerName"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please input Player Name!",
-                    },
-                ]}
+                validateStatus={errors.playerName ? "error" : ""}
+                help={errors.playerName || ""}
             >
                 <Input
                     onChange={(e) => setPlayerName(e.target.value)}
@@ -85,25 +74,14 @@ const PlayerForm = () => {
             <Form.Item
                 label="Preferred Position"
                 name="preferredPosition"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please input Preferred Position!",
-                    },
-                ]}
+                validateStatus={errors.preferredPosition ? "error" : ""}
+                help={errors.preferredPosition || ""}
             >
                 <Input
                     onChange={(e) => setPreferredPosition(e.target.value)}
                     value={preferredPosition}
                 />
             </Form.Item>
-
-            {/* Display Errors */}
-            {errors.length > 0 && (
-                errors.map((error, index) => (
-                    <p key={index} className={styles.errorMessage}>{error.message}</p>
-                ))
-            )}
 
             {/* Form Actions */}
             <Form.Item>
