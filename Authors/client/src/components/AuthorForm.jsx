@@ -10,7 +10,6 @@ const AuthorForm = () => {
     const navigate = useNavigate()
     const isEditing = !!id
 
-
     const [name, setName] = useState("");
     const [errors, setErrors] = useState({});
     const [form] = Form.useForm();

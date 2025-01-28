@@ -10,6 +10,13 @@ const AuthorDetails = () => {
     const {authorId} = useParams();
     const [loading, setLoading] = useState(true);
 
+    const formatDateTime = (dateString) => {
+        const date = new Date(dateString);
+        const formattedDate = date.toISOString().split("T")[0]; // yyyy-MM-dd
+        const formattedTime = date.toTimeString().split(":").slice(0, 2).join(":"); // HH:MM
+        return `${formattedDate} : ${formattedTime}`;
+    };
+
     useEffect(() => {
         axios.get(`http://localhost:8000/api/authors/${authorId}`)
         .then(response => {
@@ -42,8 +49,8 @@ const AuthorDetails = () => {
                     }}
                 >
                     <p><strong>ID: </strong> {author._id}</p>
-                    <p><strong>Created At: </strong> {author.createdAt}</p>
-                    <p><strong>Updated At: </strong> {author.updatedAt}</p>
+                    <p><strong>Created At: </strong> {formatDateTime(author.createdAt)}</p>
+                    <p><strong>Updated At: </strong> {formatDateTime(author.updatedAt)}</p>
                 </Card>
             </Space>
         </div>
