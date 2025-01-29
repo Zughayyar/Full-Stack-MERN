@@ -21,10 +21,29 @@
 .chatContainer {
     width: 80vw;
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border: 1px solid black;
+    padding: 10px;
 }
 
 .chat {
-    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatInput {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.chatMessagesBox {
+    width: 100%;
+    min-height: 50px;
 }
