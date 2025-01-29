@@ -1,9 +1,17 @@
-import 'normalize.css'          // Resit CSS
+import 'normalize.css'                              // Resit CSS
+import 'bootstrap/dist/css/bootstrap.min.css';      // Bootstrap package
+import styles from './styles/mainStyles.module.css'
+import Chat from "./Chat.jsx";
 
 const App = () => {
     return (
-        <div>
-            <h1>Hello World!</h1>
+        <div className={styles.mainContainer}>
+            <div className={styles.titleHeader}>
+                <h1>MERN Chat</h1>
+            </div>
+            <div className={styles.chatContainer}>
+                <Chat/>
+            </div>
         </div>
     )
 }

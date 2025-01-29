@@ -86,3 +86,12 @@ npm init -y
     npm install axios
     npm install react-router-dom
     npm run dev
+
+
+############# Socket.io ##############
+    - for server:
+    npm install socket.io
+
+    - for client:
+    npm install socket.io-client
+

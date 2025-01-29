@@ -1,0 +1,30 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    gap: 50px;
+}
+
+.titleHeader {
+    width: 80vw;
+    height: 80px;
+    background-color: lightgray;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatContainer {
+    width: 80vw;
+    max-height: 500px;
+    overflow-y: scroll;
+    border: 1px solid black;
+}
+
+.chat {
+    background-color: lightblue;
+}
