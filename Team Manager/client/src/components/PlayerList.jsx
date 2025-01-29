@@ -18,7 +18,7 @@ const PlayerList = () => {
             console.log(error);
             setLoading(false);
         })
-    }, [players])
+    }, [loading])
 
     const deletePlayer = (playerId) => {
         axios.delete(`http://localhost:8000/api/players/${playerId}`)
