@@ -22,8 +22,15 @@ const PlayerList = () => {
 
     const deletePlayer = (playerId) => {
         axios.delete(`http://localhost:8000/api/players/${playerId}`)
-        .then((response) => console.log(response))
+        .then((response) => {
+            console.log(response.data);
+            removeFromDom(playerId);
+        })
         .catch((error) => console.log(error));
+    }
+
+    const removeFromDom = playerId => {
+        setPlayers(players.filter(player => player._id !== playerId));
     }
 
     const columns = [
@@ -50,14 +57,12 @@ const PlayerList = () => {
         },
     ];
 
-
-
     if (loading) {
         return <Spin size="large" spinning={loading} />
     }
 
     return (
-        <Table columns={columns} dataSource={players} />
+        <Table columns={columns} dataSource={players} rowKey="_id" />
     )
 }
 
