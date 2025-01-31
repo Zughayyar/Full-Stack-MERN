@@ -20,8 +20,7 @@
 
 .chatContainer {
     width: 80vw;
-    max-height: 500px;
-    overflow-y: auto;
+    max-height: 700px;
     border: 1px solid black;
     padding: 10px;
 }
@@ -46,4 +45,6 @@
 .chatMessagesBox {
     width: 100%;
     min-height: 50px;
+    max-height: 500px;
+    overflow-y: auto;
 }

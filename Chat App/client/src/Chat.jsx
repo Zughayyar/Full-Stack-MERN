@@ -17,6 +17,7 @@ const Chat = () => {
         axios.get("http://localhost:8000/api/chats")
             .then((res) => {
                 setMessagesReceived(res.data);
+                scrollToBottom()
             })
             .catch((err) => console.error("Error fetching messages:", err));
 
@@ -35,20 +36,39 @@ const Chat = () => {
         };
     }, []);
 
+    useEffect(() => {
+        scrollToBottom();  // Scroll to bottom every time the messages list updates
+    }, [messagesReceived]);  // This effect will run when `messagesReceived` changes
+
     const handleStartChat = () => {
         if (userName.trim().length > 0) {
             setIsChatOpen(true);
         }
     };
 
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();  // Prevent form submission on Enter key
+            sendMessage();  // Trigger the send message function
+            scrollToBottom();  // Scroll the messages box to the bottom
+        }
+    };
+
+    const scrollToBottom = () => {
+        const chatMessagesBox = document.querySelector(`.${styles.chatMessagesBox}`);
+        if (chatMessagesBox) {
+            chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight; // Scroll to the bottom
+        }
+    };
+
+
     const sendMessage = () => {
         if (myMessage.trim().length > 0) {
             const newMessage = { user: userName, message: myMessage };
-
-            // 🔥 Only send message via socket, do NOT save it in DB here
             socket.emit("sendMessage", newMessage);
-
             setMyMessage('');
+            scrollToBottom();
         }
     };
 
@@ -109,6 +129,7 @@ const Chat = () => {
                             onChange={e => setMyMessage(e.target.value)}
                             value={myMessage}
                             placeholder="..."
+                            onKeyDown={handleKeyDown}
                         />
                         <button className="btn btn-primary" onClick={sendMessage}>Send</button>
                     </div>
