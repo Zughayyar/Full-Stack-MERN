@@ -44,15 +44,8 @@ const Chat = () => {
         if (myMessage.trim().length > 0) {
             const newMessage = { user: userName, message: myMessage };
 
-            // Send message via socket
+            // 🔥 Only send message via socket, do NOT save it in DB here
             socket.emit("sendMessage", newMessage);
-
-            // Save message to database
-            axios.post("http://localhost:8000/api/chats", newMessage)
-                .then(() => {
-                    setMessagesReceived((prevMessages) => [...prevMessages, newMessage]);
-                })
-                .catch((err) => console.error("Error saving message:", err));
 
             setMyMessage('');
         }
