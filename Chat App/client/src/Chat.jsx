@@ -2,6 +2,7 @@ import styles from './styles/mainStyles.module.css'
 import {useEffect, useState} from "react";
 import {io} from "socket.io-client";
 import axios from "axios";  // Import Axios to fetch messages
+import { format } from 'date-fns-tz';
 
 const socket = io.connect("http://localhost:8000");
 
@@ -51,6 +52,16 @@ const Chat = () => {
         }
     };
 
+    const formatTime = (isoDate) => {
+        if (!isoDate) return "Invalid Date"; // Handle missing/null values
+
+        const date = new Date(isoDate);
+        if (isNaN(date.getTime())) return "Invalid Date"; // Ensure valid date
+
+        const timeZone = "Asia/Jerusalem";
+        return format(date, "HH:mm", { timeZone });
+    };
+
     return (
         <div className={styles.chat}>
             <p>username: {userName}</p>
@@ -85,7 +96,9 @@ const Chat = () => {
                         {messagesReceived.map((message, index) => (
                             <p key={index}>
                                 <strong>{message.user}: </strong>{message.message}
+                                <span> ({formatTime(message.createdAt)})</span>
                             </p>
+
                         ))}
                     </div>
                     <div className={styles.chatInput}>

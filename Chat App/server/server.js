@@ -60,4 +60,3 @@ ChatRoutes(app);
 server.listen(port, () => {
     console.log(`Listening at Port ${port}`);
 });
-
