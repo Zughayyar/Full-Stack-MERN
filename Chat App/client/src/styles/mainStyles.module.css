@@ -20,7 +20,7 @@
 
 .chatContainer {
     width: 80vw;
-    max-height: 700px;
+    max-height: 500px;
     border: 1px solid black;
     padding: 10px;
 }
@@ -45,6 +45,29 @@
 .chatMessagesBox {
     width: 100%;
     min-height: 50px;
-    max-height: 500px;
+    max-height: 360px;
     overflow-y: auto;
+}
+
+
+.userMessage {
+    background-color: lightblue;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    max-width: 98%;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.otherUserMessage {
+    background-color: lightgreen;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    max-width: 98%;
+    text-align: left;
+    align-self: flex-start;
 }

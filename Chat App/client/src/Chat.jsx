@@ -114,11 +114,19 @@ const Chat = () => {
                 <div>
                     <div className={styles.chatMessagesBox}>
                         {messagesReceived.map((message, index) => (
-                            <p key={index}>
-                                <strong>{message.user}: </strong>{message.message}
-                                <span> ({formatTime(message.createdAt)})</span>
-                            </p>
-
+                            <div
+                                key={index}
+                                className={
+                                    message.user === userName
+                                        ? styles.userMessage
+                                        : styles.otherUserMessage
+                                }
+                            >
+                                <p>
+                                    <strong>{message.user}: </strong>{message.message}
+                                    <span> ({formatTime(message.createdAt)})</span>
+                                </p>
+                            </div>
                         ))}
                     </div>
                     <div className={styles.chatInput}>
