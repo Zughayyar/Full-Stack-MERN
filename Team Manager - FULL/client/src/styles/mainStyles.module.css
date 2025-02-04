@@ -1,0 +1,46 @@
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    background-color: lightgray;
+    height: 100vh;
+    padding: 10px;
+}
+.playerDashboard {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 2px 2px 4px black;
+    border-radius: 15px;
+    border: 1px solid lightgray;
+    height: 600px;
+    width: 80vw;
+    margin-top: 10px;
+}
+
+.navBarContainer {
+    width: 40vw;
+    display: flex;
+    gap: 30px;
+
+}
+
+.navBarPlayers {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.navBarStatus {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.errorMessage {
+    color: red;
+}

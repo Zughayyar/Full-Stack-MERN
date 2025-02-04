@@ -13,7 +13,7 @@ const App = () => {
             <NavBar />
             <Routes>
                 <Route path="/players" element={<PlayerDashboard />}>
-                    <Route path="list" element={<PlayerList />} />
+                   <Route path="list" element={<PlayerList />} />
                     <Route path="addPlayer" element={<PlayerForm />} />
                 </Route>
                 <Route path="/status/game" element={<PlayerStatus />} />

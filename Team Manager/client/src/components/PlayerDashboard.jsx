@@ -1,6 +1,6 @@
 import {Link, Outlet} from "react-router-dom";
 import styles from "./styles/mainStyles.module.css"
-import {Anchor} from "antd";
+
 
 const PlayerDashboard = (props) => {
     return (
