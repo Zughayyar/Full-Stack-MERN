@@ -83,7 +83,7 @@ module.exports = {
                 return Game.findOneAndUpdate(
                     { _id: gameId },
                     { $push: { players: playerId } }, // Use $push to add
-                    { new: true, runValidators: true,includeResultMetadata: true, lean: true }
+                    { new: true, runValidators: true,includeResultMetadata: true, lean: true })
             })
             .then(updatedGame => {
                 if (!updatedGame) { // Handle cases where findOneAndUpdate might not return a result
